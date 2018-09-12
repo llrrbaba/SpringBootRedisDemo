@@ -1,5 +1,6 @@
 package cn.rocker.redis.test;
 
+import cn.rocker.redis.conf.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
@@ -26,13 +27,13 @@ public class RedisTempOperationTest {
      * 并且帮我们配置模板{@link RedisTemplate}{@link StringRedisTemplate}
      */
     @Autowired
-    private StringRedisTemplate template;
+    private RedisUtils redisUtils;
 
 
     @RequestMapping("/test")
     public String test(){
-        template.opsForValue().set("message1","111hello redis, i am new here");
-        return template.opsForValue().get("message1");
+        redisUtils.set("message1","111hello redis, i am new here");
+        return (String) redisUtils.get("message1");
     }
 
 }
