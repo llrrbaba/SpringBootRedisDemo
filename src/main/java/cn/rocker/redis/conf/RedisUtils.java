@@ -47,7 +47,6 @@ public class RedisUtils {
     }
 
 
-
     /** 
      * 批量删除对应的value 
      */
@@ -56,12 +55,12 @@ public class RedisUtils {
             remove(key);  
         }  
     }  
-  
+
+
     /** 
      * 批量删除key 
      */
-    @SuppressWarnings("unchecked")  
-    public void removePattern(final String pattern) {  
+    public void removePattern(final String pattern) {
         Set<Serializable> keys = redisTemplate.keys(pattern);  
         if (keys.size() > 0)  
             redisTemplate.delete(keys);  
@@ -71,18 +70,17 @@ public class RedisUtils {
     /** 
      * 删除对应的value 
      */
-    @SuppressWarnings("unchecked")  
-    public void remove(final String key) {  
+    public void remove(final String key) {
         if (exists(key)) {  
             redisTemplate.delete(key);  
         }  
     }  
-  
+
+
     /** 
      * 判断缓存中是否有对应的value 
      */
-    @SuppressWarnings("unchecked")  
-    public boolean exists(final String key) {  
+    public boolean exists(final String key) {
         return redisTemplate.hasKey(key);  
     }  
 
@@ -90,23 +88,18 @@ public class RedisUtils {
     /** 
      * 读取缓存 
      */
-    @SuppressWarnings("unchecked")  
-    public Object get(final String key) {  
+    public Object get(final String key) {
         Object result = null;  
         ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
         result = operations.get(key);  
         return result;  
     }  
-  
+
+
     /** 
      * 写入缓存 
-     *  
-     * @param key 
-     * @param value 
-     * @return 
-     */  
-    @SuppressWarnings("unchecked")  
-    public boolean set(final String key, Object value) {  
+     */
+    public boolean set(final String key, Object value) {
         boolean result = false;  
         try {  
             ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
@@ -117,11 +110,11 @@ public class RedisUtils {
         }  
         return result;  
     }  
-  
+
+
     /** 
      * 写入缓存 
      */
-    @SuppressWarnings("unchecked")  
     public boolean set(final String key, Object value, long expireTime) {
         boolean result = false;  
         try {  
@@ -133,5 +126,15 @@ public class RedisUtils {
             e.printStackTrace();  
         }  
         return result;  
-    } 
+    }
+
+
+    /**
+     * 自增
+     */
+    public long increment(String key, long num){
+        return redisTemplate.opsForValue().increment(key, num);
+    }
+
+
 }
